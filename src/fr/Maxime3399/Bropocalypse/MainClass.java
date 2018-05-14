@@ -32,7 +32,16 @@ public class MainClass extends JavaPlugin{
 				
 				if(MySQLUtils.connect()) {
 					
-					start();
+					if(MySQLUtils.execute("CREATE TABLE IF NOT EXISTS `test`.`bropocalypse_players` ( `uuid` VARCHAR(255) NOT NULL , `win` INT(255) NOT NULL , `loses` INT(255) NOT NULL , `kills_knife` INT(255) NOT NULL , `kills_canon` INT(255) NOT NULL , `deaths` INT(255) NOT NULL , `time_hours` INT(255) NOT NULL , `time_minutes` INT(255) NOT NULL , `time_seconds` INT(255) NOT NULL ) ENGINE = MyISAM;", false)) {
+						
+						start();
+						
+					}else {
+						
+						Bukkit.getConsoleSender().sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §cCréation des tables de la base de données impossible.");
+						disable();
+						
+					}
 					
 				}else {
 					
@@ -53,6 +62,7 @@ public class MainClass extends JavaPlugin{
 	
 	private static void start() {
 		
+		Bukkit.getConsoleSender().sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §aLe plugin a correctement démarré !");
 		//Start
 		
 	}
