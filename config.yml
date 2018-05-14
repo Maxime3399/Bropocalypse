@@ -1,0 +1,10 @@
+#========== DATABASE ==========
+
+Database:
+    Enable: true
+    Adress: "localhost"
+    User: "root"
+    Password: ""
+    Database: ""
+    Port: 3306
+    UseSSL: false
