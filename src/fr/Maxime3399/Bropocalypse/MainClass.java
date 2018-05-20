@@ -7,6 +7,8 @@ import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.Maxime3399.Bropocalypse.custom.GameState;
+import fr.Maxime3399.Bropocalypse.managers.EventsManager;
 import fr.Maxime3399.Bropocalypse.utils.MySQLUtils;
 
 public class MainClass extends JavaPlugin{
@@ -16,6 +18,7 @@ public class MainClass extends JavaPlugin{
 	public void onEnable() {
 		
 		plugin = this;
+		GameState.setState(GameState.START);
 		
 		File f = new File(getDataFolder(), "config.yml");
 		if(!f.exists()) {
@@ -63,7 +66,7 @@ public class MainClass extends JavaPlugin{
 	private static void start() {
 		
 		Bukkit.getConsoleSender().sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §aLe plugin a correctement démarré !");
-		//Start
+		EventsManager.registerEvents();
 		
 	}
 	
