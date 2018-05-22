@@ -5,7 +5,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import fr.Maxime3399.Bropocalypse.MainClass;
+import fr.Maxime3399.Bropocalypse.events.CancelEvents;
 import fr.Maxime3399.Bropocalypse.events.JoinEvents;
+import fr.Maxime3399.Bropocalypse.events.QuitEvents;
 
 public class EventsManager {
 	
@@ -15,6 +17,8 @@ public class EventsManager {
 		PluginManager pm = Bukkit.getPluginManager();
 		
 		pm.registerEvents(new JoinEvents(), p);
+		pm.registerEvents(new QuitEvents(), p);
+		pm.registerEvents(new CancelEvents(), p);
 		
 	}
 

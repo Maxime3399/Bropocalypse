@@ -10,6 +10,7 @@ public class CustomPlayer {
 	private Player player;
 	private Role role;
 	private Team team;
+	private Mode mode;
 	private boolean dead;
 	private int respawn;
 	
@@ -31,6 +32,7 @@ public class CustomPlayer {
 		this.setPlayer(p);
 		this.setRole(null);
 		this.setTeam(null);
+		this.setMode(Mode.DEFAULT);
 		this.setDead(false);
 		this.setRespawn(0);
 		this.setCurrent_kills_knife(0);
@@ -82,6 +84,14 @@ public class CustomPlayer {
 
 	public void setTeam(Team team) {
 		this.team = team;
+	}
+
+	public Mode getMode() {
+		return mode;
+	}
+
+	public void setMode(Mode mode) {
+		this.mode = mode;
 	}
 
 	public boolean isDead() {
