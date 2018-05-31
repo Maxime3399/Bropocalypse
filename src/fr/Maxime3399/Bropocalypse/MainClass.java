@@ -14,6 +14,8 @@ import fr.Maxime3399.Bropocalypse.utils.MySQLUtils;
 public class MainClass extends JavaPlugin{
 	
 	private static Plugin plugin;
+	private static int task;
+	private static int starter = 6;
 	
 	public void onEnable() {
 		
@@ -68,6 +70,24 @@ public class MainClass extends JavaPlugin{
 		Bukkit.getConsoleSender().sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §aLe plugin a correctement démarré !");
 		EventsManager.registerEvents();
 		
+		task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				starter--;
+				
+				if(starter == 0) {
+					
+					Bukkit.getScheduler().cancelTask(task);
+					GameState.setState(GameState.WAITING);
+					
+				}
+				
+			}
+			
+		}, 20, 20);
+		
 	}
 	
 	public static Configuration getConfiguration() {
@@ -86,6 +106,14 @@ public class MainClass extends JavaPlugin{
 		
 		Bukkit.getPluginManager().disablePlugin(plugin);
 		
+	}
+
+	public static int getStarter() {
+		return starter;
+	}
+
+	public static void setStarter(int starter) {
+		MainClass.starter = starter;
 	}
 
 }
