@@ -2,6 +2,7 @@ package fr.Maxime3399.Bropocalypse.custom;
 
 import org.bukkit.entity.Player;
 
+import fr.Maxime3399.Bropocalypse.MainClass;
 import fr.Maxime3399.Bropocalypse.utils.MySQLUtils;
 
 public class CustomPlayer {
@@ -38,27 +39,40 @@ public class CustomPlayer {
 		this.setCurrent_kills_knife(0);
 		this.setCurrent_kills_canon(0);
 		this.setCurrent_deaths(0);
-		this.setData_win(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "win"));
-		this.setData_loses(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "loses"));
-		this.setData_kills_knife(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "kills_knife"));
-		this.setData_kills_canon(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "kills_canon"));
-		this.setData_deaths(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "deaths"));
-		this.setData_time_hours(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_hours"));
-		this.setData_time_minutes(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_minutes"));
-		this.setData_time_seconds(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_seconds"));
+		if(MainClass.getConfiguration().getBoolean("Database.Enable")) {
+			this.setData_win(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "win"));
+			this.setData_loses(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "loses"));
+			this.setData_kills_knife(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "kills_knife"));
+			this.setData_kills_canon(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "kills_canon"));
+			this.setData_deaths(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "deaths"));
+			this.setData_time_hours(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_hours"));
+			this.setData_time_minutes(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_minutes"));
+			this.setData_time_seconds(MySQLUtils.getInt("bropocalypse_players", "uuid", p.getUniqueId().toString(), "time_seconds"));
+		}else {
+			this.setData_win(0);
+			this.setData_loses(0);
+			this.setData_kills_knife(0);
+			this.setData_kills_canon(0);
+			this.setData_deaths(0);
+			this.setData_time_hours(0);
+			this.setData_time_minutes(0);
+			this.setData_time_seconds(0);
+		}
 		
 	}
 	
 	public void save() {
 		
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "win", data_win);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "loses", data_loses);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "kills_knife", data_kills_knife);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "kills_canon", data_kills_canon);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "deaths", data_deaths);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_hours", data_time_hours);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_minutes", data_time_minutes);
-		MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_seconds", data_time_seconds);
+		if(MainClass.getConfiguration().getBoolean("Database.Enable")) {
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "win", data_win);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "loses", data_loses);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "kills_knife", data_kills_knife);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "kills_canon", data_kills_canon);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "deaths", data_deaths);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_hours", data_time_hours);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_minutes", data_time_minutes);
+			MySQLUtils.setInt("bropocalypse_players", "uuid", player.getUniqueId().toString(), "time_seconds", data_time_seconds);	
+		}
 		
 	}
 
