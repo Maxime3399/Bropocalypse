@@ -6,21 +6,24 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.Scoreboard;
 
 import fr.Maxime3399.Bropocalypse.custom.GameState;
 import fr.Maxime3399.Bropocalypse.managers.EventsManager;
+import fr.Maxime3399.Bropocalypse.managers.MapManager;
 import fr.Maxime3399.Bropocalypse.utils.MySQLUtils;
 
 public class MainClass extends JavaPlugin{
 	
 	private static Plugin plugin;
 	private static int task;
-	private static int starter = 6;
+	private static int starter = 11;
 	
 	public void onEnable() {
 		
 		plugin = this;
 		GameState.setState(GameState.START);
+		MapManager.selectMap();
 		
 		File f = new File(getDataFolder(), "config.yml");
 		if(!f.exists()) {
@@ -69,6 +72,11 @@ public class MainClass extends JavaPlugin{
 		
 		Bukkit.getConsoleSender().sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §aLe plugin a correctement démarré !");
 		EventsManager.registerEvents();
+		Scoreboard sc = Bukkit.getScoreboardManager().getMainScoreboard();
+		org.bukkit.scoreboard.Team tRed = sc.registerNewTeam("00000Red");
+		org.bukkit.scoreboard.Team tBlue = sc.registerNewTeam("00001Blue");
+		tRed.setPrefix("§c");
+		tBlue.setPrefix("§9");
 		
 		task = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 			
@@ -87,6 +95,14 @@ public class MainClass extends JavaPlugin{
 			}
 			
 		}, 20, 20);
+		
+	}
+	
+	public void onDisable() {
+		
+		Scoreboard sc = Bukkit.getScoreboardManager().getMainScoreboard();
+		sc.getTeam("00000Red").unregister();
+		sc.getTeam("00001Blue").unregister();
 		
 	}
 	
