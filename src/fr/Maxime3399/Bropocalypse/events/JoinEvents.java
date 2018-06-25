@@ -1,10 +1,7 @@
 package fr.Maxime3399.Bropocalypse.events;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -84,7 +81,6 @@ public class JoinEvents implements Listener {
 							
 						}else if(timer == 0) {
 							
-							ArrayList<Location> locs = MapManager.getSpawns();
 							for(Player pls : Bukkit.getOnlinePlayers()) {
 								
 								CustomPlayer cps = PlayersManager.getCustomPlayer(pls);
@@ -132,13 +128,11 @@ public class JoinEvents implements Listener {
 								}
 								
 								InventorySetter.setGameInventory(pls);
-								
-								if(locs.size() == 0) {
-									locs = MapManager.getSpawns();
+								if(cps.getTeam() == Team.BLUE) {
+									pls.teleport(MapManager.getBlueLocation());
+								}else {
+									pls.teleport(MapManager.getRedLocation());
 								}
-								Location lr = locs.get(0);
-								locs.remove(lr);
-								pls.teleport(lr);
 								
 							}
 							

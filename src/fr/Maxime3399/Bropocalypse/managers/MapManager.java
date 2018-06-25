@@ -1,7 +1,5 @@
 package fr.Maxime3399.Bropocalypse.managers;
 
-import java.util.ArrayList;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
@@ -30,20 +28,32 @@ public class MapManager {
 		
 	}
 	
-	public static ArrayList<Location> getSpawns(){
+	public static Location getBlueLocation() {
 		
-		ArrayList<Location > list = new ArrayList<>();
+		Location loc = null;
 		
 		if(map.equalsIgnoreCase("Azteque")) {
 			
-			Location l1 = new Location(Bukkit.getWorld("Azteque"), 13.5, 88.1, 20.5);
-			list.add(l1);
-			Location l2 = new Location(Bukkit.getWorld("Azteque"), 13.5, 95.1, 20.5);
-			list.add(l2);
+			loc = new Location(Bukkit.getWorld("Azteque"), 13.5, 98.1, 48.5);
+			loc.setYaw(-180);
 			
 		}
+		
+		return loc;
+		
+	}
+	
+	public static Location getRedLocation() {
+		
+		Location loc = null;
+		
+		if(map.equalsIgnoreCase("Azteque")) {
 			
-		return list;
+			loc = new Location(Bukkit.getWorld("Azteque"), 13.5, 98.1, -28.5);
+			
+		}
+		
+		return loc;
 		
 	}
 
