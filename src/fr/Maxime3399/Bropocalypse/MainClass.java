@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Scoreboard;
@@ -99,6 +100,12 @@ public class MainClass extends JavaPlugin{
 	}
 	
 	public void onDisable() {
+		
+		for(Player pls : Bukkit.getOnlinePlayers()) {
+			
+			pls.kickPlayer("§6Redémarrage du serveur");
+			
+		}
 		
 		Scoreboard sc = Bukkit.getScoreboardManager().getMainScoreboard();
 		sc.getTeam("00000Red").unregister();

@@ -19,6 +19,7 @@ import fr.Maxime3399.Bropocalypse.managers.MapManager;
 import fr.Maxime3399.Bropocalypse.managers.PlayersManager;
 import fr.Maxime3399.Bropocalypse.scoreboards.WaitScoreboard;
 import fr.Maxime3399.Bropocalypse.setter.InventorySetter;
+import fr.Maxime3399.Bropocalypse.utils.ExpUtils;
 import fr.Maxime3399.Bropocalypse.utils.MySQLUtils;
 
 public class JoinEvents implements Listener {
@@ -70,6 +71,14 @@ public class JoinEvents implements Listener {
 						setTimer(getTimer() - 1);
 						for(Player pls : Bukkit.getOnlinePlayers()) {
 							WaitScoreboard.loadScoreboard(pls);
+							ExpUtils.setExpBar(pls, timer, 61);
+							Bukkit.getScheduler().scheduleSyncDelayedTask(MainClass.getInstance(), new Runnable() {
+								@Override
+								public void run() {
+									ExpUtils.setExpBar(pls, (float) timer-0.5, 61);
+								}
+							}, 10);
+							pls.setLevel(timer);
 						}
 						
 						if(timer == 60 || timer == 30 || timer == 10 || timer == 5 || timer == 4 || timer == 3 || timer == 2 || timer == 1) {
@@ -80,6 +89,9 @@ public class JoinEvents implements Listener {
 							}
 							
 						}else if(timer == 0) {
+							
+							GameState.setState(GameState.PLAYING);
+							cancelTimer();
 							
 							for(Player pls : Bukkit.getOnlinePlayers()) {
 								
@@ -102,26 +114,35 @@ public class JoinEvents implements Listener {
 										}
 									}
 									
+									int countRed = 0;
+									for(Player pls2 : Bukkit.getOnlinePlayers()) {
+										CustomPlayer cps2 = PlayersManager.getCustomPlayer(pls2);
+										if(cps2.getTeam() == Team.RED) {
+											countRed = countRed+1;
+										}
+									}
+									
 									Scoreboard sc = Bukkit.getScoreboardManager().getMainScoreboard();
 									org.bukkit.scoreboard.Team tRed = sc.getTeam("00000Red");
 									org.bukkit.scoreboard.Team tBlue = sc.getTeam("00001Blue");
 									
-									if(countBlue >= 5) {
+									if(countBlue >= countRed) {
 										
 										cps.setTeam(Team.RED);
-										if(tBlue.getPlayers().contains(p)) {
+										if(tBlue.getPlayers().contains(pls)) {
 											tBlue.removePlayer(p);
 										}
-										tRed.addPlayer(p);
-										p.sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §eTu as rejoint l'équipe §c§lrouge§r §e!");
+										tRed.addPlayer(pls);
+										pls.sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §eTu as rejoint l'équipe §c§lrouge§r §e!");
 										
 									}else {
 										
-										if(tRed.getPlayers().contains(p)) {
-											tRed.removePlayer(p);
+										cps.setTeam(Team.BLUE);
+										if(tRed.getPlayers().contains(pls)) {
+											tRed.removePlayer(pls);
 										}
-										tBlue.addPlayer(p);
-										p.sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §eTu as rejoint l'équipe §9§lbleu§r §e!");
+										tBlue.addPlayer(pls);
+										pls.sendMessage("§6§l[§r§3Bropocalypse§6§l]§r §eTu as rejoint l'équipe §9§lbleu§r §e!");
 										
 									}
 									

@@ -49,7 +49,7 @@ public class MapManager {
 		
 		if(map.equalsIgnoreCase("Azteque")) {
 			
-			loc = new Location(Bukkit.getWorld("Azteque"), 13.5, 98.1, -28.5);
+			loc = new Location(Bukkit.getWorld("Azteque"), 13.5, 98.1, -27.5);
 			
 		}
 		

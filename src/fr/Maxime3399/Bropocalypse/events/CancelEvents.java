@@ -6,6 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
@@ -92,6 +93,10 @@ public class CancelEvents implements Listener {
 	public void onDamage(EntityDamageEvent e) {
 		
 		if(!GameState.isState(GameState.PLAYING)) {
+			
+			e.setCancelled(true);
+			
+		}else if(e.getCause() == DamageCause.FALL){
 			
 			e.setCancelled(true);
 			
